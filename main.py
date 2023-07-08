@@ -7,6 +7,7 @@ from datetime import datetime
 API_KEY = os.getenv('API_KEY')
 CURRENCY_RATES_FILE = "currency_rates.json"
 
+
 def get_currency_rate(currency: str) -> float:
     """
     Получает курс валюты от API и возвращает его в виде float\
@@ -31,7 +32,7 @@ def save_to_json(data: dict) -> None:
                 data_lst = json.load(j_file)
             data_lst.append(data)
             with open(CURRENCY_RATES_FILE, 'w') as new_file:
-                json.dump([data], new_file)
+                json.dump(data_lst, new_file)
 
 
 def main():
@@ -48,7 +49,7 @@ def main():
         data = {"rate": rate, "timestamp": timestamp}
         save_to_json(data)
 
-        choice = input("Выберите действие: (1 - продолжить, 2 - выйти)\n")
+        choice = int(input("Выберите действие: (1 - продолжить, 2 - выйти)\n"))
         if choice == 1:
             continue
         elif choice == 2:
@@ -59,3 +60,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
