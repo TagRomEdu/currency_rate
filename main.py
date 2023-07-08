@@ -18,3 +18,17 @@ def get_currency_rate(currency: str) -> float:
 
     return response.json()['rates']['RUB']
 
+
+def save_to_json(data: dict) -> None:
+    """
+    Сохраняет данные в JSON-файл
+    """
+    with open(CURRENCY_RATES_FILE, 'a') as file:
+        if os.stat(CURRENCY_RATES_FILE).st_size == 0:
+            json.dump([data], file)
+        else:
+            with open(CURRENCY_RATES_FILE) as j_file:
+                data_lst = json.load(j_file)
+            data_lst.append(data)
+            with open(CURRENCY_RATES_FILE, 'w') as new_file:
+                json.dump([data], new_file)
